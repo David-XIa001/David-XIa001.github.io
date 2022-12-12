@@ -4,38 +4,13 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2022/12/12/hello-world/"/>
-    <url>/2022/12/12/hello-world/</url>
+    <title></title>
+    <link href="/2022/12/12/gitLab%E8%BF%81%E7%A7%BB%E8%BF%9C%E7%A8%8B%E4%BB%93/"/>
+    <url>/2022/12/12/gitLab%E8%BF%81%E7%A7%BB%E8%BF%9C%E7%A8%8B%E4%BB%93/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>测试文章</title>
-    <link href="/2021/06/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
-    <url>/2021/06/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    
-    <content type="html"><![CDATA[<p>这是一篇测试文章</p><img src="/2021/06/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/test.png" class="" title="图片引用方法一"><p><img src="/test.png" alt="图片引用方法二"></p><p><img src="/images/test.png" alt="图片引用方法三"></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="gitLab使用镜像同步-迁移远程仓库"><a href="#gitLab使用镜像同步-迁移远程仓库" class="headerlink" title="gitLab使用镜像同步,迁移远程仓库"></a>gitLab使用镜像同步,迁移远程仓库</h1><h3 id="需求"><a href="#需求" class="headerlink" title="需求:"></a>需求:</h3><p>旧的远程仓库不再使用了,需要把旧的远程仓库代码迁移到新的远程仓库上</p><h3 id="操作"><a href="#操作" class="headerlink" title="操作:"></a>操作:</h3><ol><li>使用常规手段,用旧的本地仓库更换远程仓库地址,然后推送到新的远程仓库中</li><li>使用gitlab自带的Mirroring repositories镜像同步的方法去将旧的仓库同步到新的远程仓库上</li></ol><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤:"></a>步骤:</h3><ol><li><p>打开新的远程仓库的gitlab页面,找到setting下的repository下的</p><img src="/2022/12/12/gitLab%E8%BF%81%E7%A7%BB%E8%BF%9C%E7%A8%8B%E4%BB%93/1.png" class=""></li><li><p>展开后的页面需要填写这两个表单</p></li><li><p>需要注意的是,旧的远程仓库的地址需要加上你旧的远程仓库的用户名</p><ol><li>远程仓库地址<a href="http://xxx.git/">http://xxx.git</a> 用户名为:david</li><li>那么要填的URL为: <a href="http://david@xxx.git/">http://david@xxx.git</a></li></ol></li><li><p>输入完毕后,点击这个按钮进行同步</p></li><li><p>会出现这两个提示,告诉你正在同步</p></li><li></li></ol><p>7.这个时候等待即可,或者点下面那个刷新按钮,,直到告诉你已经同步成功了!</p><p>8.然后点击删除按钮,删除掉这个同步,不然会一直同步的,这个时候就ok啦</p><p>9.这样同步过来的可能会有一个问题,就是之前设置的保护分支或者默认分支就需要重新设置一下</p>]]></content>
     
     
-    <categories>
-      
-      <category>Java</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>原创</tag>
-      
-    </tags>
     
   </entry>
   
