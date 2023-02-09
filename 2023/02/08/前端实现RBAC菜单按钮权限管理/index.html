@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="David_Xia">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前端实现RBAC菜单按钮权限管理业务背景 现在后台管理系统一般都会涉及到角色权限的分类,目的是为了使用一套系统多个角色,每个角色分配不同的菜单和按钮权限,进而对不同角色实现权限管理  原理 建立数据源 项目菜单数据源 功能按钮数据源 角色数据源 人员数据源   把菜单和按钮相应的数据源分配给对应的角色 创建人员的时候选择对应的角色 用户登录之后即可获取对应的权限  技术原理 动态路由(实现菜单权限">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端实现RBAC菜单按钮权限管理">
+<meta property="og:url" content="http://example.com/2023/02/08/%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0RBAC%E8%8F%9C%E5%8D%95%E6%8C%89%E9%92%AE%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="David_Xia">
+<meta property="og:description" content="前端实现RBAC菜单按钮权限管理业务背景 现在后台管理系统一般都会涉及到角色权限的分类,目的是为了使用一套系统多个角色,每个角色分配不同的菜单和按钮权限,进而对不同角色实现权限管理  原理 建立数据源 项目菜单数据源 功能按钮数据源 角色数据源 人员数据源   把菜单和按钮相应的数据源分配给对应的角色 创建人员的时候选择对应的角色 用户登录之后即可获取对应的权限  技术原理 动态路由(实现菜单权限">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-08T12:01:41.000Z">
+<meta property="article:modified_time" content="2023-02-09T11:28:31.446Z">
+<meta property="article:author" content="David_Xia">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>前端实现RBAC菜单按钮权限管理 - David_Xia</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"ynEywmRkK3P198pDrp7FLNtj-MdYXbMMI","app_key":"8n6BxMiFUZnIwcZrXfJyIuLm","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>David_Xia</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="前端实现RBAC菜单按钮权限管理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-08 20:01" pubdate>
+          2023年2月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">前端实现RBAC菜单按钮权限管理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前端实现RBAC菜单按钮权限管理"><a href="#前端实现RBAC菜单按钮权限管理" class="headerlink" title="前端实现RBAC菜单按钮权限管理"></a>前端实现RBAC菜单按钮权限管理</h1><h2 id="业务背景"><a href="#业务背景" class="headerlink" title="业务背景"></a>业务背景</h2><blockquote>
+<p>现在后台管理系统一般都会涉及到角色权限的分类,目的是为了使用一套系统多个角色,每个角色分配不同的菜单和按钮权限,进而对不同角色实现权限管理</p>
+</blockquote>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li>建立数据源<ul>
+<li>项目菜单数据源</li>
+<li>功能按钮数据源</li>
+<li>角色数据源</li>
+<li>人员数据源</li>
+</ul>
+</li>
+<li>把菜单和按钮相应的数据源分配给对应的角色</li>
+<li>创建人员的时候选择对应的角色</li>
+<li>用户登录之后即可获取对应的权限</li>
+</ul>
+<h3 id="技术原理"><a href="#技术原理" class="headerlink" title="技术原理"></a>技术原理</h3><ul>
+<li>动态路由(实现菜单权限管理)</li>
+<li>v-permission指令(权限管理颗粒度达到到按钮的级别)</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 页面静态路由(所有权限都一定会有的路由)</span><br><span class="hljs-comment">// 直接挂载</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> constantRoutes = [<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/login&#x27;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;@/views/login/index&#x27;</span>),<br>    <span class="hljs-attr">hidden</span>: <span class="hljs-literal">true</span><br>  &#125;,<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/404&#x27;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;@/views/404&#x27;</span>),<br>    <span class="hljs-attr">hidden</span>: <span class="hljs-literal">true</span><br>  &#125;<br>]<br><span class="hljs-comment">// 需要动态加载的路由</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> asyncRoutes = [<br>    ...<br>]<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="登录之后根据接口返回的数据权限动态添加路由"><a href="#登录之后根据接口返回的数据权限动态添加路由" class="headerlink" title="登录之后根据接口返回的数据权限动态添加路由"></a>登录之后根据接口返回的数据权限动态添加路由</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// accessRoutes  根据接口返回的数据权限拼接过后的路由</span><br>router.<span class="hljs-title function_">addRoutes</span>(accessRoutes) <span class="hljs-comment">// 动态添加</span><br></code></pre></td></tr></table></figure>
+<h3 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h3><ul>
+<li><p>动态添加的路由是无法在 <strong>options.routes</strong> 中查看的</p>
+<ul>
+<li>所以需要记录自己添加的动态路由,放在 store 中供后面 menu 组件使用</li>
+</ul>
+</li>
+<li><p>需要保证登录之后匹配第一个路由(附解决方案)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 解决方案</span><br>router.<span class="hljs-title function_">beforeEach</span>(<span class="hljs-title function_">async</span>(to, <span class="hljs-keyword">from</span>, next) =&gt; &#123;<br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">start</span>()<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-title function_">getPageTitle</span>(to.<span class="hljs-property">meta</span>.<span class="hljs-property">title</span>)<br>  <span class="hljs-keyword">const</span> hasToken = <span class="hljs-title function_">getAccessToken</span>()<br>  <span class="hljs-keyword">if</span> (hasToken) &#123;<br>    <span class="hljs-keyword">if</span> (to.<span class="hljs-property">path</span> === <span class="hljs-string">&#x27;/login&#x27;</span>) &#123;<br>      <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/&#x27;</span> &#125;)<br>      <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">const</span> hasRoles = store.<span class="hljs-property">getters</span>.<span class="hljs-property">roles</span> &amp;&amp; store.<span class="hljs-property">getters</span>.<span class="hljs-property">roles</span>.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span><br>      <span class="hljs-keyword">if</span> (hasRoles) &#123;<br>        <span class="hljs-title function_">next</span>()<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>          <span class="hljs-keyword">const</span> role = <span class="hljs-keyword">await</span> store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;user/getInfo&#x27;</span>)<br>          <span class="hljs-keyword">const</span> accessRoutes = <span class="hljs-keyword">await</span> store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;permission/generateRoutes&#x27;</span>,role)<br>          router.<span class="hljs-title function_">addRoutes</span>(accessRoutes)<br>          <span class="hljs-keyword">let</span> path = <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-comment">// 登录后默认跳转路由</span><br>          <span class="hljs-keyword">if</span> (accessRoutes &amp;&amp; accessRoutes[<span class="hljs-number">0</span>].<span class="hljs-property">path</span> !== path) &#123;<br>            <span class="hljs-comment">// 如果默认第一个路由不为默认值,则匹配第一个路由地址</span><br>            <span class="hljs-keyword">if</span> (accessRoutes[<span class="hljs-number">0</span>].<span class="hljs-property">children</span>) &#123;<br>              path = accessRoutes[<span class="hljs-number">0</span>].<span class="hljs-property">path</span> + <span class="hljs-string">&#x27;/&#x27;</span> + accessRoutes[<span class="hljs-number">0</span>].<span class="hljs-property">children</span>[<span class="hljs-number">0</span>].<span class="hljs-property">path</span><br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>              path = accessRoutes[<span class="hljs-number">0</span>].<span class="hljs-property">path</span><br>            &#125;<br>          &#125;<br>        <span class="hljs-comment">//  解决刷新后默认跳转到首页问题</span><br>          <span class="hljs-keyword">if</span> (to.<span class="hljs-property">fullPath</span> === <span class="hljs-string">&#x27;/&#x27;</span>) &#123;<br>            <span class="hljs-title function_">next</span>(&#123; path, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span> &#125;)<br>          &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-title function_">next</span>(&#123; ...to, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span> &#125;)<br>          &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>          <span class="hljs-keyword">await</span> store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;user/resetToken&#x27;</span>)<br>          <span class="hljs-title class_">Message</span>.<span class="hljs-title function_">error</span>(error || <span class="hljs-string">&#x27;Has Error&#x27;</span>)<br>          <span class="hljs-title function_">next</span>(<span class="hljs-string">`/login?redirect=<span class="hljs-subst">$&#123;to.path&#125;</span>`</span>)<br>          <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>()<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (whiteList.<span class="hljs-title function_">indexOf</span>(to.<span class="hljs-property">path</span>) !== -<span class="hljs-number">1</span>) &#123;<br>      <span class="hljs-title function_">next</span>()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-title function_">next</span>(<span class="hljs-string">`/login?redirect=<span class="hljs-subst">$&#123;to.path&#125;</span>`</span>)<br>      <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>()<br>    &#125;<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>重置动态路由</p>
+<p>  vue-router 只提供了 addRouter 方法去添加路由,没有提供删除路由的方法,所以遇到切换角色或者退出登陆后换角色登录,需要重置路由后再次动态添加</p>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li>简单粗暴,退出登录之后直接刷新浏览器( <code>window.location.reload();</code> )</li>
+<li>重置 matcher 还原动态路由<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Router</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-router&#x27;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">createRouter</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Router</span>(&#123;<br>    <span class="hljs-attr">scrollBehavior</span>: <span class="hljs-function">() =&gt;</span> (&#123; <span class="hljs-attr">y</span>: <span class="hljs-number">0</span> &#125;),<br>    <span class="hljs-attr">routes</span>: constantRoutes  <span class="hljs-comment">// 静态路由</span><br>  &#125;)<br>&#125;<br><br><span class="hljs-keyword">const</span> router = <span class="hljs-title function_">createRouter</span>()<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resetRouter</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> newRouter = <span class="hljs-title function_">createRouter</span>()<br>  router.<span class="hljs-property">matcher</span> = newRouter.<span class="hljs-property">matcher</span> <span class="hljs-comment">// 重置路由</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="权限颗粒度达到按钮级别实现"><a href="#权限颗粒度达到按钮级别实现" class="headerlink" title="权限颗粒度达到按钮级别实现"></a>权限颗粒度达到按钮级别实现</h3><p><strong>思路</strong></p>
+<blockquote>
+<p>给每一个按钮唯一标识，获取所有按钮权限进行逐个比对，有这个标识则显示，否则就不显示</p>
+</blockquote>
+<p><strong>示例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;el-button<br>    v-permission=<span class="hljs-string">&quot;&#x27;base:soft:add&#x27;&quot;</span> <span class="hljs-comment">// 唯一标识为 &#x27;base:soft:add&#x27;</span><br>    type=<span class="hljs-string">&quot;primary&quot;</span><br>    size=<span class="hljs-string">&quot;mini&quot;</span><br>    plain<br>    icon=<span class="hljs-string">&quot;el-icon-plus&quot;</span><br>    @click=<span class="hljs-string">&quot;handleAdd&quot;</span><br>  &gt;<br>    &#123;&#123; $t(<span class="hljs-string">&quot;common.add&quot;</span>) &#125;&#125;<br>&lt;/el-button&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>实现 <strong>v-permission</strong> 指令</li>
+</ul>
+<p>v-permission 的作用就是动态添加或者移除按钮</p>
+<p><strong>目录结构</strong></p>
+<p><code>src └─directives ├─permission │ ├─index.js │ ├─permission.js</code></p>
+<h4 id="permission-js"><a href="#permission-js" class="headerlink" title="permission.js"></a>permission.js</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/store&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">checkPermission</span>(<span class="hljs-params">el, binding</span>) &#123;<br>  <span class="hljs-keyword">const</span> &#123; value &#125; = binding<br>  <span class="hljs-comment">// btns 为一个对象，利用 hasOwnProperty 判断是按钮是否存在的时间复杂度为 O1，使用数组的效率会低很多</span><br>  <span class="hljs-keyword">const</span> bnts = store.<span class="hljs-property">getters</span> &amp;&amp; store.<span class="hljs-property">getters</span>.<span class="hljs-property">permission_btntKeyList</span><br>  <span class="hljs-keyword">const</span> bntKey = value<br>  <span class="hljs-keyword">const</span> hasPermission = bnts.<span class="hljs-title function_">hasOwnProperty</span>(bntKey) <br>  <span class="hljs-keyword">if</span> (!hasPermission) &#123;<br>    el.<span class="hljs-property">parentNode</span> &amp;&amp; el.<span class="hljs-property">parentNode</span>.<span class="hljs-title function_">removeChild</span>(el)<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">inserted</span>(<span class="hljs-params">el, binding</span>) &#123;<br>    <span class="hljs-title function_">checkPermission</span>(el, binding)<br>  &#125;,<br>  <span class="hljs-title function_">update</span>(<span class="hljs-params">el, binding</span>) &#123;<br>    <span class="hljs-title function_">checkPermission</span>(el, binding)<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> permission <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./permission&#x27;</span><br><br><span class="hljs-keyword">const</span> install = <span class="hljs-keyword">function</span>(<span class="hljs-params">Vue</span>) &#123;<br>  <span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">directive</span>(<span class="hljs-string">&#x27;permission&#x27;</span>, permission)<br>&#125;<br><br><span class="hljs-keyword">if</span> (<span class="hljs-variable language_">window</span>.<span class="hljs-property">Vue</span>) &#123;<br>  <span class="hljs-variable language_">window</span>[<span class="hljs-string">&#x27;permission&#x27;</span>] = permission<br>  <span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">use</span>(install); <span class="hljs-comment">// eslint-disable-line</span><br>&#125;<br><br>permission.<span class="hljs-property">install</span> = install<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> permission<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="main-js-中全局挂载"><a href="#main-js-中全局挂载" class="headerlink" title="main.js 中全局挂载"></a>main.js 中全局挂载</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> permission <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/directives/permission&#x27;</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">use</span>(permission)<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>前端实现RBAC菜单按钮权限管理</div>
+      <div>http://example.com/2023/02/08/前端实现RBAC菜单按钮权限管理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>David_Xia</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/30/%E5%89%8D%E7%AB%AF%E5%9B%BD%E9%99%85%E5%8C%96%E4%BD%A0%E8%BF%98%E5%9C%A8%E4%B8%80%E4%B8%AA%E4%B8%AA%E7%BF%BB%E8%AF%91-%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4-%E8%AE%A9%E4%BD%A0%E5%9D%90%E7%9D%80%E5%96%9D%E8%8C%B6/" title="前端国际化你还在一个个翻译?复制粘贴,让你坐着喝茶">
+                        <span class="hidden-mobile">前端国际化你还在一个个翻译?复制粘贴,让你坐着喝茶</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
