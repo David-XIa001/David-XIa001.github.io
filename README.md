@@ -10,6 +10,14 @@
 
 - hexo g -d
 
+## 提交代码至 source分支
+
+- git add .
+
+- git commit 'xxx'
+
+- git push
+
 ## 预览
 
 - hexo s
