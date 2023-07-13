@@ -29,8 +29,8 @@ categories:
 
 - 改造第一步，先下依赖 `npm install vite -D `，安装就直接报错。
 - 原因是 vite 支持的最低 vue 版本为 vue2.7
-- 所以需要将项目升级至 vue2.7，这里我直接升级到 vue2.7.14，然后再下依赖，依然报错
-- 原因是 vite 对应 vue2.7 的版本的依赖不是执行 `npm install vite -D `， 而是执行 `npm i @vitejs/plugin-vue2`
+- 所以需要将项目升级至 vue2.7，这里我直接升级到 vue2.7.14，然后再下依赖
+- 然后再执行 npm i @vitejs/plugin-vue2
 - 如果项目中有使用过 jsx 语法的话，还需要安装 `npm i @vitejs/plugin-vue2-jsx`
 - 至此，依赖版本问题解决
 
